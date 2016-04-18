@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xml="http://www.w3.org/XML/1998/namespace"
+    xmlns:ewp="https://github.com/erasmus-without-paper/ewp-specs-architecture/blob/stable-v1/common-types.xsd"
+    xmlns:mobility="https://github.com/erasmus-without-paper/ewp-specs-api-mobilities/blob/master/response.xsd"
+    elementFormDefault="qualified"
+
+    targetNamespace="https://github.com/erasmus-without-paper/ewp-specs-api-mobility-update/blob/master/entries_to_append.xsd"
+    xmlns="https://github.com/erasmus-without-paper/ewp-specs-api-mobility-update/blob/master/entries_to_append.xsd"
+>
+    <!-- WRTODO: Replace all occurrences of 'master' (in all projects) with 'stable-v1' upon release. -->
+
+    <xs:import
+        schemaLocation="https://raw.githubusercontent.com/erasmus-without-paper/ewp-specs-architecture/stable-v1/common-types.xsd"
+        namespace="https://github.com/erasmus-without-paper/ewp-specs-architecture/blob/stable-v1/common-types.xsd"
+    />
+
+    <xs:import
+        schemaLocation="https://raw.githubusercontent.com/erasmus-without-paper/ewp-specs-api-mobilities/master/response.xsd"
+        namespace="https://github.com/erasmus-without-paper/ewp-specs-api-mobilities/blob/master/response.xsd"
+    />
+
+    <xs:annotation>
+        <xs:documentation>
+            This schema is a part of the Erasmus Without Paper project. Before you start
+            using it, make sure you have read the general rules described here:
+
+            http://developers.erasmuswithoutpaper.eu/
+        </xs:documentation>
+    </xs:annotation>
+
+    <xs:element name="parameter">
+        <xs:annotation>
+            <xs:documentation>
+                This describes the format of the `entries_to_append` parameter used in the
+                Outgoing Mobility Remote Update API.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:group ref="mobility:OutgoingMobilityHistoryEntry" minOccurs="1" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>
+                            A list of Outgoing Mobility history entries, in the same format as returned by
+                            the Outgoing Mobilities API.
+
+                            Please note, that servers are allowed to reject some requests if they find it
+                            suspicious (e.g. when a receiving institution is attempting to mark a Learning
+                            Agreement as "accepted by the sending institution"). For more details on
+                            available history entries (and who is allowed to append them), please see the
+                            XML Schema of the Outgoing Mobilities API.
+                        </xs:documentation>
+                    </xs:annotation>
+                </xs:group>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
