@@ -44,10 +44,10 @@ Integer. The current length of the Outgoing Mobility object's history, i.e. the
 number of child elements of the `<timeline>` element. "Current" means "before
 this new change is made".
 
-This parameter is required in order to verify that the requester is aware of
-the current state of the mobility (to prevent race conditions, i.e. when a new
-history entry is appended by the sending HEI and the receiving HEI at the same
-time).
+This parameter is required in order to prevent [edit conflicts]
+(https://en.wikipedia.org/wiki/Edit_conflict). Before proceeding with the
+update, the server is REQUIRED to verify if the requester is in possession of
+the current version of the Outgoing Mobility object.
 
 
 ### `entries_to_append` (required)
