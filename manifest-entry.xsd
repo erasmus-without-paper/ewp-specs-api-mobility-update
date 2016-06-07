@@ -44,6 +44,51 @@
                                 </xs:documentation>
                             </xs:annotation>
                         </xs:element>
+                        <xs:element name="timeline-features-supported">
+                            <xs:annotation>
+                                <xs:documentation>
+                                    One of the requirements of the EWP Network was to allow the partners to
+                                    implement just the nomination part of the mobility process:
+
+                                    https://github.com/erasmus-without-paper/ewp-wp4-use-cases/issues/3
+
+                                    Therefore, we have split all the timeline entries into groups, and we allow the
+                                    server implementers to support only a subset of all the entries.
+
+                                    * Server implementers are RECOMMENDED (but not required) to implement all of
+                                      the Outgoing Mobility API features.
+
+                                    * Client implementers are REQUIRED to take the value of this element into
+                                      account before making the call to the Outgoing Mobility Remote Update API.
+                                </xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction>
+                                    <xs:enumeration value="nominations-only">
+                                        <xs:annotation>
+                                            <xs:documentation>
+                                                The minimum required support level. This includes all the entries related to
+                                                the nominations. See the schemas of the Outgoing Mobilities API for details.
+
+                                                Notes for the client implementers: If this value is present in the Registry
+                                                response, then it means that the server does not (yet) support timeline entries
+                                                related to Learning Agreements. This means that your `entries_to_append`
+                                                parameter may include entries related to nominations only.
+                                            </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:enumeration>
+                                    <xs:enumeration value="all">
+                                        <xs:annotation>
+                                            <xs:documentation>
+                                                If this value is present in the Registry response, then the server MUST support
+                                                **all** the mobility timeline entries specified in the documentation of the
+                                                greatest version of the Outgoing Mobilities API implemented by this server.
+                                            </xs:documentation>
+                                        </xs:annotation>
+                                    </xs:enumeration>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
                     </xs:sequence>
                 </xs:extension>
             </xs:complexContent>

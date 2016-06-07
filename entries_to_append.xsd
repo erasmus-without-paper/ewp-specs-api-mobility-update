@@ -45,7 +45,11 @@
                             A list of Outgoing Mobility history entries, in the same format as returned by
                             the Outgoing Mobilities API.
 
-                            Please note, that servers are allowed to reject some requests if they find it
+                            Please note, that servers are allowed to implement only a subset of mobility
+                            history features. See `timeline-features-supported` element in the
+                            `manifest-entry.xsd` file for details!
+
+                            Also note, that servers are allowed to reject some requests if they find it
                             suspicious (e.g. when a receiving institution is attempting to mark a Learning
                             Agreement as "accepted by the sending institution"). For more details on
                             available history entries (and who is allowed to append them), please see the
