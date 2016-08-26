@@ -24,25 +24,35 @@ Request method
 Request parameters
 ------------------
 
-Parameters MUST be in the `application/x-www-form-urlencoded` format (for POST
-requests).
+Parameters MUST be provided in the regular `application/x-www-form-urlencoded`
+format.
+
+
+### `sending_hei_id` (required)
+
+An identifier of the institution which is the master of the Outgoing Mobility
+object the client wants to modify. This parameter MUST be required by the
+server even if it covers only a single institution.
+
+Note, that `mobility_id` identifiers should be unique within the entire EWP
+Network, not only within a single sending HEI (see discussion
+[here](https://github.com/erasmus-without-paper/general-issues/issues/10)).
+That might imply that, in theory, the `sending_hei_id` parameter could be
+skipped. However, it still exists, and it is required, for performance and/or
+clarity reasons (see discussion [here]
+(https://github.com/erasmus-without-paper/ewp-specs-api-echo/issues/3#issuecomment-228278115)).
 
 
 ### `mobility_id` (required)
 
-ID of Outgoing Mobility object the client wants to modify.
-
-Note, that `mobility_id` identifiers are unique within the entire EWP Network
-(see discussion
-[here](https://github.com/erasmus-without-paper/general-issues/issues/10)), so
-there is no reason for the `hei_id` parameter to exist.
+ID of Outgoing Mobility object the client wants to modify. It must "belong" to
+the sending HEI provided in the `sending_hei_id` parameter.
 
 
 ### `sync_verifier` (required)
 
-Integer. The current length of the Outgoing Mobility object's history, i.e. the
-number of child elements of the `<timeline>` element. "Current" means "before
-this new change is made".
+Integer. The current revision of the Outgoing Mobility object's timeline.
+"Current" means "before this new change is made".
 
 This parameter is required in order to prevent [edit conflicts]
 (https://en.wikipedia.org/wiki/Edit_conflict). Before proceeding with the
@@ -61,14 +71,14 @@ schema annotations for further information.
 Permissions
 -----------
 
- * If the caller is receiving HEI of the Outgoing Mobility object identified by
-   `mobility_id` parameter, then he MUST be allowed to call this API.
+ * If the caller covers the receiving HEI of the Outgoing Mobility identified
+   by `mobility_id` parameter, then he MUST be allowed to call this API.
 
- * If the caller is the sending HEI (yourself), then he MAY be allowed
-   access to read the mobility data. (It seems reasonable, but it's really an
-   internal decision of your team.)
+ * If the caller covers the sending HEI of the mobility, then he MAY be allowed
+   to call this API. (It seems reasonable, but we leave this decision to your
+   team.)
 
- * All other callers MUST NOT be allowed access to mobility data.
+ * All other callers MUST NOT be allowed access to this API.
 
 
 Handling of invalid parameters
@@ -79,16 +89,16 @@ Handling of invalid parameters
  * Invalid or unknown `mobility_id` values MUST result in a HTTP 400 error
    response.
 
- * If object identified by `mobility_id` exists, but the requester doesn't have
-   the permission to modify it, then server MUST respond with a HTTP 403 error
-   response.
+ * If object identified by `mobility_id` exists, but it is not visible to the
+   requester (and thus, not modifiable too), then the server also MUST respond
+   with HTTP 400 error.
 
  * Invalid `entries_to_append` values (e.g. when the value does not conform to
    the proper XML Schema) MUST result in a HTTP 400 error response.
 
  * Invalid (out-of-date) values of `sync_verifier` MUST result in HTTP 409
    error response. Clients which receive this error should refresh their stale
-   Outgoing Mobility objects and resolve all conflicts before resubmitting
+   Outgoing Mobility object and resolve all conflicts before resubmitting
    their requests.
 
 
