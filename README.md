@@ -1,5 +1,5 @@
-Outgoing Mobility Remote Update API
-===================================
+OBSOLETE - Outgoing Mobility Remote Update API
+==============================================
 
 * [What is the status of this document?][statuses]
 * [See the index of all other EWP Specifications][develhub]
@@ -7,6 +7,9 @@ Outgoing Mobility Remote Update API
 
 Summary
 -------
+
+**OBSOLETE: This proposal has been merged with [Outgoing Mobilities API]
+[mobilities-api].**
 
 This document describes the **Outgoing Mobility Remote Update API**. This API is
 implemented by the sending institution. It allows the receiving institution to
@@ -116,3 +119,4 @@ Servers MUST respond with a valid XML document described by the [response.xsd]
 [echo]: https://github.com/erasmus-without-paper/ewp-specs-api-echo
 [error-handling]: https://github.com/erasmus-without-paper/ewp-specs-architecture#error-handling
 [institutions-api]: https://github.com/erasmus-without-paper/ewp-specs-api-institutions
+[mobilities-api]: https://github.com/erasmus-without-paper/ewp-specs-api-mobilities
